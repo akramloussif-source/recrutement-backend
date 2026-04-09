@@ -1,6 +1,6 @@
-package recrutement_backend.repository;
+package com.recrutement.repository;
 
-import recrutement_backend.entity.Candidat;
+import com.recrutement.entity.Candidat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

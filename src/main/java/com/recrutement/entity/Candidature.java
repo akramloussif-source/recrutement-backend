@@ -1,4 +1,4 @@
-package recrutement_backend.entity;
+package com.recrutement.entity;
 
 import com.recrutement.entity.enums.StatutCandidature;
 import jakarta.persistence.*;
