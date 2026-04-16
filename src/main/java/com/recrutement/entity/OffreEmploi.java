@@ -5,10 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "OFFRES_EMPLOI")
 @Data @NoArgsConstructor @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OffreEmploi {
 
     @Id
@@ -44,6 +47,7 @@ public class OffreEmploi {
     @JoinColumn(name = "RECRUTEUR_ID", nullable = false)
     private Recruteur recruteur;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "offre", cascade = CascadeType.ALL)
     private List<Candidature> candidatures;
 }

@@ -18,3 +18,4 @@ public interface OffreEmploiRepository
             "OR LOWER(o.description) LIKE LOWER(CONCAT('%',:keyword,'%')))")
     List<OffreEmploi> searchByKeyword(String keyword);
 }
+

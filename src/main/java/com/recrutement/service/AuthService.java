@@ -14,12 +14,16 @@ public class AuthService {
 
     private final CandidatRepository candidatRepo;
     private final RecruteurRepository recruteurRepo;
+    private final UtilisateurRepository utilisateurRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Candidat inscrireCandidat(RegisterCandidatDTO dto) {
-        if (candidatRepo.existsByEmail(dto.getEmail()))
+        if (candidatRepo.findByEmail(dto.getEmail()).isPresent())
             throw new RuntimeException("Email déjà utilisé");
+
+        if (utilisateurRepo.existsByLogin(dto.getLogin()))
+            throw new RuntimeException("Login déjà utilisé");
 
         Candidat c = new Candidat();
         c.setLogin(dto.getLogin());
@@ -37,8 +41,11 @@ public class AuthService {
 
     @Transactional
     public Recruteur inscrireRecruteur(RegisterRecruteurDTO dto) {
-        if (recruteurRepo.existsByEmail(dto.getEmail()))
+        if (recruteurRepo.findByEmail(dto.getEmail()).isPresent())
             throw new RuntimeException("Email déjà utilisé");
+
+        if (utilisateurRepo.existsByLogin(dto.getLogin()))
+            throw new RuntimeException("Login déjà utilisé");
 
         Recruteur r = new Recruteur();
         r.setLogin(dto.getLogin());

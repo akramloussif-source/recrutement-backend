@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/api/candidatures")
@@ -19,17 +20,23 @@ public class CandidatureController {
 
     private final CandidatureService candidatureService;
 
-    @PostMapping(value = "/postuler",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/postuler")
+    @PreAuthorize("hasRole('CANDIDAT')")
     public ResponseEntity<Candidature> postuler(
-            @RequestPart("data") CandidatureDTO dto,
-            @RequestPart(value = "cv", required = false)
-            MultipartFile cvFile,
+            @RequestParam Long offreId,
+            @RequestParam(required = false) String lettreMotivation,
+            @RequestParam(value = "cv", required = false) MultipartFile cvFile,
             Authentication auth) throws Exception {
+
         Long candidatId = (Long) auth.getPrincipal();
+
+        // Crée un DTO manuellement
+        CandidatureDTO dto = new CandidatureDTO();
+        dto.setOffreId(offreId);
+        dto.setLettreMotivation(lettreMotivation);
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(candidatureService.postuler(
-                        dto, candidatId, cvFile));
+                .body(candidatureService.postuler(dto, candidatId, cvFile));
     }
 
     @GetMapping("/mes-candidatures")

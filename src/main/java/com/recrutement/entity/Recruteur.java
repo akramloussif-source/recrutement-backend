@@ -2,12 +2,16 @@ package com.recrutement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "RECRUTEURS")
 @DiscriminatorValue("RECRUTEUR")
 @Data @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Recruteur extends Utilisateur {
 
     @Column(name = "NOM_ENTREPRISE", length = 150)

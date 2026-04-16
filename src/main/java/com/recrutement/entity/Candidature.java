@@ -5,7 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "CANDIDATURES",
         uniqueConstraints = @UniqueConstraint(
@@ -38,9 +41,11 @@ public class Candidature {
     @JoinColumn(name = "OFFRE_ID", nullable = false)
     private OffreEmploi offre;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "candidature", cascade = CascadeType.ALL)
     private List<Document> documents;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "candidature", cascade = CascadeType.ALL)
     private List<Entretien> entretiens;
 

@@ -2,6 +2,8 @@ package com.recrutement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "UTILISATEURS")
@@ -20,6 +22,7 @@ public abstract class Utilisateur {
     @Column(nullable = false, unique = true, length = 100)
     private String login;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

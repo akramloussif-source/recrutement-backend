@@ -2,12 +2,16 @@ package com.recrutement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "CANDIDATS")
 @DiscriminatorValue("CANDIDAT")
 @Data @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Candidat extends Utilisateur {
 
     @Column(nullable = false, length = 100)

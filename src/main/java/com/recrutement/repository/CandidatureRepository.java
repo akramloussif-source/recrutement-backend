@@ -5,6 +5,8 @@ import com.recrutement.entity.enums.StatutCandidature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface CandidatureRepository
         extends JpaRepository<Candidature, Long> {
@@ -15,7 +17,8 @@ public interface CandidatureRepository
 
     List<Candidature> findByOffreRecruteurId(Long recruteurId);
 
-    Boolean existsByCandidatIdAndOffreId(Long candidatId, Long offreId);
+    @Query("SELECT COUNT(c) > 0 FROM Candidature c WHERE c.candidat.id = :candidatId AND c.offre.id = :offreId")
+    boolean existsByCandidatIdAndOffreId(@Param("candidatId") Long candidatId, @Param("offreId") Long offreId);
 
     List<Candidature> findByStatutActuel(StatutCandidature statut);
 

@@ -4,7 +4,10 @@ import com.recrutement.entity.enums.EtatRdv;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "ENTRETIENS")
 @Data @NoArgsConstructor @AllArgsConstructor
@@ -33,10 +36,12 @@ public class Entretien {
     @Column(name = "ETAT_RDV", length = 20)
     private EtatRdv etatRdv = EtatRdv.PLANIFIE;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CANDIDATURE_ID", nullable = false)
     private Candidature candidature;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "entretien", cascade = CascadeType.ALL)
     private Evaluation evaluation;
 }
