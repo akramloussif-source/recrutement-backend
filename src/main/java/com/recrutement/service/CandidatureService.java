@@ -77,7 +77,7 @@ public class CandidatureService {
     }
 
     public List<Candidature> getMesCandidatures(Long candidatId) {
-        return candidatureRepo.findByCandidatId(candidatId);
+        return candidatureRepo.findByCandidatIdWithOffreAndRecruteur(candidatId);
     }
 
     public List<Candidature> getCandidaturesByOffre(Long offreId) {

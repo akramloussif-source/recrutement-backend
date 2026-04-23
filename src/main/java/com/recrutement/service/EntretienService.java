@@ -22,16 +22,18 @@ public class EntretienService {
     public Entretien planifierEntretien(EntretienDTO dto,
                                         Long recruteurId) {
 
-        // Vérifier conflit horaire
-        if (entretienRepo.existsConflitHoraire(
-                recruteurId, dto.getDateHeure()))
-            throw new RuntimeException(
-                    "Conflit de créneau : un entretien existe déjà à cette heure");
+        if (entretienRepo.countByCandidatureId(dto.getCandidatureId()) > 0)
+            throw new RuntimeException("Un entretien existe déjà pour cette candidature");
+
+        if (entretienRepo.countConflitHoraire(recruteurId, dto.getDateHeure()) > 0)
+            throw new RuntimeException("Conflit de créneau : un entretien existe déjà à cette heure");
 
         Candidature candidature = candidatureRepo
                 .findById(dto.getCandidatureId())
                 .orElseThrow(() ->
                         new RuntimeException("Candidature introuvable"));
+
+
 
         // Créer l'entretien
         Entretien entretien = new Entretien();

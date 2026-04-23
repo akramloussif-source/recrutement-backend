@@ -35,10 +35,12 @@ public class Candidature {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CANDIDAT_ID", nullable = false)
+    @JsonIgnoreProperties({"candidatures", "hibernateLazyInitializer", "handler"})
     private Candidat candidat;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OFFRE_ID", nullable = false)
+    @JsonIgnoreProperties({"candidatures", "hibernateLazyInitializer", "handler"})
     private OffreEmploi offre;
 
     @JsonIgnore

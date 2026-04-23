@@ -22,6 +22,12 @@ public interface CandidatureRepository
 
     List<Candidature> findByStatutActuel(StatutCandidature statut);
 
+    @Query("SELECT c FROM Candidature c " +
+            "JOIN FETCH c.offre o " +
+            "JOIN FETCH o.recruteur " +
+            "WHERE c.candidat.id = :candidatId")
+    List<Candidature> findByCandidatIdWithOffreAndRecruteur(@Param("candidatId") Long candidatId);
+
     Optional<Candidature> findByCandidatIdAndOffreId(
             Long candidatId, Long offreId);
 }

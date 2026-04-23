@@ -3,8 +3,11 @@ package com.recrutement.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 @Entity
 @Table(name = "RECRUTEURS")
 @DiscriminatorValue("RECRUTEUR")

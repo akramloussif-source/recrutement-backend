@@ -45,6 +45,7 @@ public class OffreEmploi {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RECRUTEUR_ID", nullable = false)
+    @JsonIgnoreProperties({"candidatures", "password", "hibernateLazyInitializer", "handler"})
     private Recruteur recruteur;
 
     @JsonIgnore

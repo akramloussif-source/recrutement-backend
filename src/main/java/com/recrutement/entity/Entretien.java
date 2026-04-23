@@ -36,9 +36,9 @@ public class Entretien {
     @Column(name = "ETAT_RDV", length = 20)
     private EtatRdv etatRdv = EtatRdv.PLANIFIE;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CANDIDATURE_ID", nullable = false)
+    @JsonIgnoreProperties({"entretiens", "documents", "hibernateLazyInitializer", "handler"})
     private Candidature candidature;
 
     @JsonIgnore

@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // 🔓 CRITIQUE : Autoriser les Preflight requests (OPTIONS)
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         // public
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/offres/search").permitAll()
@@ -49,7 +51,11 @@ public class SecurityConfig {
                         .hasRole("RECRUTEUR")
                         .requestMatchers("/api/entretiens/planifier")
                         .hasRole("RECRUTEUR")
+                        .requestMatchers("/api/entretiens/*/etat")
+                        .hasRole("RECRUTEUR")
                         .requestMatchers("/api/evaluations/**")
+                        .hasRole("RECRUTEUR")
+                        .requestMatchers("/api/documents/**")
                         .hasRole("RECRUTEUR")
                         // tout le reste : authentifié
                         .anyRequest().authenticated()
@@ -68,9 +74,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfig() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
-        config.setAllowedMethods(
-                List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        config.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:5173"  // ← ajoute cette ligne
+        ));        config.setAllowedMethods(
+                List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
